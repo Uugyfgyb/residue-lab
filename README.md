@@ -2,6 +2,10 @@
 
 一个无需构建工具的中文交互网页，介绍留数的定义、留数定理、三种常见计算方法和三道分步例题。
 
+## 在线访问
+
+[打开留数实验室](https://uugyfgyb.github.io/residue-lab/)。每次推送到 `main` 后，GitHub Actions 会将 `dist/` 发布到 GitHub Pages。
+
 ## 本地运行
 
 使用 Node.js 启动本地静态服务：
