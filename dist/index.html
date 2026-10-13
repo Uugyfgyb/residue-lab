@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121923">
+  <meta name="description" content="用可交互图解和分步例题，轻松理解复变函数的留数与留数定理。">
+  <title>留数实验室 · 绕一圈，答案就出现了</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="留数实验室，回到顶部"><span class="brand-symbol">∮</span><span>留数<span class="brand-light">实验室</span></span></a>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#concept">概念</a><a href="#contour">围道实验</a><a href="#methods">计算方法</a><a href="#examples">例题</a>
+    </nav>
+    <a class="header-cta" href="#contour">开始探索 <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="top">
+    <section class="hero section-wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> 复变函数 · 一次讲明白</div>
+        <h1 id="hero-title">绕一圈，<br><em>答案</em>就出现了<span class="hero-period">。</span></h1>
+        <p class="hero-intro">留数并不是奇点的“全部秘密”。它只盯住一个系数，却能把一整圈的积分算出来。跟着图形、公式和例题，看看它怎么做到。</p>
+        <div class="hero-actions"><a class="button button-primary" href="#concept">从概念开始 <span aria-hidden="true">↘</span></a><a class="text-link" href="#examples">直接看例题 <span aria-hidden="true">→</span></a></div>
+        <div class="hero-meta"><span><strong>04</strong> 个学习环节</span><i></i><span><strong>03</strong> 道分步例题</span><i></i><span>约 <strong>8</strong> 分钟</span></div>
+      </div>
+      <div class="hero-visual" aria-label="围道围住奇点的示意图">
+        <div class="visual-topline"><span>FIG. 01 — 绕奇点一圈</span><span>COMPLEX PLANE</span></div>
+        <svg class="hero-svg" viewBox="0 0 490 460" role="img" aria-label="复平面上围住 z₀ 的一条逆时针闭合围道">
+          <defs><pattern id="heroGrid" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M 42 0 L 0 0 0 42" fill="none" stroke="#35404b" stroke-width=".7"/></pattern><filter id="glow"><feGaussianBlur stdDeviation="8"/></filter></defs>
+          <rect width="490" height="460" fill="url(#heroGrid)" opacity=".75"/>
+          <path d="M48 234H445M237 44V418" stroke="#6f7a83" stroke-width="1.4" opacity=".7"/>
+          <path d="M 351 146 C 332 124 306 108 275 103 C 184 86 97 141 94 240 C 91 329 169 397 282 365 C 387 336 412 209 351 146 Z" fill="#ff8359" fill-opacity=".09" stroke="#ff8359" stroke-width="3"/>
+          <path d="M 351 146 C 332 124 306 108 275 103 C 184 86 97 141 94 240 C 91 329 169 397 282 365 C 387 336 412 209 351 146 Z" fill="none" stroke="#ff8359" stroke-width="12" opacity=".15" filter="url(#glow)"/>
+          <path d="M 368 178 L 375 160 L 386 174" fill="none" stroke="#ff8359" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="237" cy="234" r="18" fill="#ff8359" opacity=".13"/><circle cx="237" cy="234" r="6" fill="#ff8359"/>
+          <circle cx="350" cy="234" r="5" fill="#b2bbc2"/>
+          <text x="253" y="218" fill="#fff2e8" font-size="24" font-style="italic" font-family="Georgia,serif">z₀</text>
+          <text x="364" y="256" fill="#aab6bc" font-size="18" font-style="italic" font-family="Georgia,serif">z₁</text>
+          <text x="396" y="129" fill="#ffad91" font-size="24" font-style="italic" font-family="Georgia,serif">C</text>
+          <text x="446" y="229" fill="#8e9ba4" font-size="18" font-style="italic" font-family="Georgia,serif">Re</text>
+          <text x="245" y="43" fill="#8e9ba4" font-size="18" font-style="italic" font-family="Georgia,serif">Im</text>
+        </svg>
+        <div class="visual-formula"><span>∮<sub>C</sub> f(z) dz</span><span class="visual-equals">=</span><span>2πi · <span class="accent">Σ Res</span></span></div>
+        <div class="visual-caption"><span class="pulse-dot"></span> 只统计圈内的奇点</div>
+      </div>
+      <div class="hero-bottom"><span>SCROLL TO EXPLORE</span><span aria-hidden="true">↓</span></div>
+    </section>
+
+    <section class="concept-section" id="concept" aria-labelledby="concept-title">
+      <div class="section-wrap">
+        <div class="section-heading"><span class="section-index">01 / 核心概念</span><h2 id="concept-title">留数，究竟<span class="underline-orange">留住了什么？</span></h2><p>把函数放到奇点附近展开。众多项里，只有一项会在绕圈积分后留下痕迹。</p></div>
+        <div class="concept-layout">
+          <div class="laurent-panel">
+            <div class="panel-heading"><span class="panel-kicker">LAURENT SERIES</span><span class="small-badge">点击每一项</span></div>
+            <div class="series-intro">在孤立奇点 <span class="math-inline">z₀</span> 附近：</div>
+            <div class="series-equation" role="group" aria-label="点击洛朗展开中的项，查看其绕圈积分">
+              <span class="series-start">f(z) = ··· +</span>
+              <button class="series-term" data-term="minus2" aria-pressed="false"><span>a<sub>−2</sub></span><span class="fraction-rule"></span><span>(z−z₀)²</span></button>
+              <span class="series-plus">+</span>
+              <button class="series-term selected" data-term="minus1" aria-pressed="true"><span>a<sub>−1</sub></span><span class="fraction-rule"></span><span>z−z₀</span></button>
+              <span class="series-plus">+</span>
+              <button class="series-term plain-term" data-term="zero" aria-pressed="false">a<sub>0</sub></button>
+              <span class="series-plus">+ ···</span>
+            </div>
+            <div class="term-response" id="term-response" aria-live="polite">
+              <div><span class="response-label">被圈出来的主角</span><strong>a<sub>−1</sub></strong></div>
+              <p>这一项的绕圈积分是 <span class="math-inline">2πi · a<sub>−1</sub></span>。因此 <span class="math-inline">Res(f, z₀) = a<sub>−1</sub></span>。</p>
+            </div>
+            <p class="math-note"><span>✳ 数学旁白</span> 留数像奇点留下的一枚指纹：高次负幂看着更吓人，但这一圈只认 <span class="math-inline">−1</span> 次幂。</p>
+          </div>
+          <div class="concept-aside">
+            <div class="aside-number">01</div>
+            <h3>为什么偏偏是<br><span>−1 次幂？</span></h3>
+            <p>沿着半径为 <span class="math-inline">r</span> 的逆时针圆，令 <span class="math-inline">z−z₀ = re<sup>it</sup></span>。每项都在转，只有 <span class="math-inline">1/(z−z₀)</span> 的变化恰好与 <span class="math-inline">dz</span> 抵消。</p>
+            <div class="aside-equation">∮<sub>C</sub> (z−z₀)<sup>n</sup> dz = <span>2πi，n = −1</span><br><span class="indent">0，n ≠ −1</span></div>
+            <p class="aside-foot">条件：级数在包含路径的圆环内收敛；路径逆时针且不穿过奇点。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contour-section" id="contour" aria-labelledby="contour-title">
+      <div class="section-wrap">
+        <div class="section-heading light-heading"><span class="section-index">02 / 围道实验</span><h2 id="contour-title">动一动围道，<br><span class="underline-orange">看答案跳变。</span></h2><p>拖动半径，观察哪些奇点进入圆内。函数始终是 <span class="math-inline">f(z)=1/[z(z−1)]</span>。</p></div>
+        <div class="lab-grid">
+          <div class="plot-card">
+            <div class="plot-top"><span>LIVE / COMPLEX PLANE · 逆时针</span><span class="plot-status"><span class="pulse-dot"></span> 实时计算</span></div>
+            <svg id="contour-plot" class="plot-svg" viewBox="0 0 480 310" role="img" aria-label="围道半径变化时，奇点进入或离开圆内的示意图">
+              <defs><pattern id="labGrid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M 25 0 L 0 0 0 25" fill="none" stroke="#33404a" stroke-width=".7"/></pattern></defs>
+              <rect width="480" height="310" fill="url(#labGrid)"/>
+              <path d="M 30 155 H 451 M 190 20 V 289" stroke="#6d7982" stroke-width="1.2"/>
+              <path d="m451 155-7-4v8zM190 20l-4 7h8z" fill="#6d7982"/>
+              <circle id="contour-circle" cx="190" cy="155" r="68" fill="#fc8059" fill-opacity=".08" stroke="#fc8059" stroke-width="2.8"/>
+              <circle cx="190" cy="155" r="14" fill="#fc8059" opacity=".16"/><circle cx="190" cy="155" r="5.5" fill="#fc8059"/>
+              <circle id="pole-one-halo" cx="290" cy="155" r="14" fill="#7edacb" opacity=".12"/><circle id="pole-one" cx="290" cy="155" r="5.5" fill="#7edacb"/>
+              <text x="173" y="186" fill="#f9c5b5" font-size="17" font-family="Georgia,serif">0</text><text x="287" y="185" fill="#b2eee2" font-size="17" font-family="Georgia,serif">1</text>
+              <text x="456" y="151" fill="#86959c" font-size="15" font-family="Georgia,serif">Re</text><text x="198" y="22" fill="#86959c" font-size="15" font-family="Georgia,serif">Im</text>
+              <text id="radius-label" x="228" y="92" fill="#ffab8f" font-size="16" font-family="Georgia,serif">r = 0.68</text>
+            </svg>
+            <div class="slider-area"><div class="slider-label-row"><label for="radius-slider">围道半径 r</label><output id="radius-output" for="radius-slider">0.68</output></div><input id="radius-slider" type="range" min="40" max="140" value="68" step="1" aria-describedby="slider-help"><div class="slider-ticks"><span>0.40</span><span>r = 1 时经过奇点</span><span>1.40</span></div><p id="slider-help" class="sr-only">使用左右方向键改变半径，半径为 1 时围道经过奇点，积分未定义。</p></div>
+          </div>
+          <div class="lab-results">
+            <div class="results-head"><span>当前计算 / <span id="case-title">只围住 z = 0</span></span><span id="case-pill" class="case-pill">1 个奇点</span></div>
+            <div class="decomposition"><span class="tiny-label">先拆开它</span><div class="math-line">1/[z(z−1)] <span class="muted">=</span> <span class="orange">−1/z</span> <span class="muted">+</span> <span class="mint">1/(z−1)</span></div></div>
+            <div class="pole-list"><div id="pole-zero-row" class="pole-row inside"><span class="pole-mark orange-bg"></span><span>z = 0</span><strong>Res = −1</strong><span class="pole-state">圈内</span></div><div id="pole-one-row" class="pole-row"><span class="pole-mark mint-bg"></span><span>z = 1</span><strong>Res = +1</strong><span class="pole-state">圈外</span></div></div>
+            <div class="result-block"><span class="tiny-label">所以这圈的积分是</span><div id="integral-result" class="integral-result" aria-live="polite">−2πi</div><div id="result-detail" class="result-detail">2πi × (−1) = −2πi</div></div>
+            <p id="lab-comment" class="lab-comment"><span>✳ 数学旁白</span> 奇点 1 站在圈外，再抢眼也暂时没有投票权。</p>
+          </div>
+        </div>
+        <div class="theorem-strip"><span>留数定理</span><strong>∮<sub>C</sub> f(z) dz = 2πi · Σ<sub>圈内</sub> Res(f, z<sub>k</sub>)</strong><small>适用于正向、简单闭合围道；f 在围道上及其内部除有限个孤立奇点外解析。</small></div>
+      </div>
+    </section>
+
+    <section class="methods-section" id="methods" aria-labelledby="methods-title"><div class="section-wrap">
+      <div class="section-heading"><span class="section-index">03 / 计算工具箱</span><h2 id="methods-title">遇到奇点，<span class="underline-orange">用哪把钥匙？</span></h2><p>先辨认极点的阶数，再选最省力的公式。</p></div>
+      <div class="method-grid">
+        <article class="method-card"><div class="method-no">01 <span>最常用</span></div><h3>一阶极点：乘回去</h3><p>若 <span class="math-inline">z₀</span> 是一阶极点，把那枚 <span class="math-inline">(z−z₀)</span> 乘回去，再取极限。</p><div class="method-formula">Res(f,z₀) = lim<sub>z→z₀</sub> (z−z₀)f(z)</div><div class="method-note">✳ 像把唯一闯祸的分母先取消，再看它留下什么。</div></article>
+        <article class="method-card"><div class="method-no">02 <span>有理函数捷径</span></div><h3>分母的简单零点</h3><p>若 <span class="math-inline">f=g/h</span>，且 <span class="math-inline">h(z₀)=0</span>、<span class="math-inline">h′(z₀)≠0</span>，直接套用：</p><div class="method-formula">Res(f,z₀) = g(z₀) / h′(z₀)</div><div class="method-note">✳ 分母在零点附近长得像切线；导数就是它的斜率。</div></article>
+        <article class="method-card"><div class="method-no">03 <span>高阶极点</span></div><h3>先消极点，再求导</h3><p>若 <span class="math-inline">z₀</span> 是 <span class="math-inline">m</span> 阶极点，求 <span class="math-inline">m−1</span> 次导数后代入。</p><div class="method-formula method-formula-small">Res(f,z₀) = 1/(m−1)! · [d<sup>m−1</sup>/dz<sup>m−1</sup> ((z−z₀)<sup>m</sup>f(z))]<sub>z=z₀</sub></div><div class="method-note">✳ 求导不是惩罚：它是在泰勒展开里精准捞出一次项。</div></article>
+      </div>
+    </div></section>
+
+    <section class="examples-section" id="examples" aria-labelledby="examples-title"><div class="section-wrap">
+      <div class="section-heading"><span class="section-index">04 / 分步例题</span><h2 id="examples-title">现在，<span class="underline-orange">亲手算三题。</span></h2><p>每次只看一步。先自己想一想，再点击展开。</p></div>
+      <div class="example-shell">
+        <div class="example-tabs" role="tablist" aria-label="选择例题"><button role="tab" id="tab-1" aria-controls="example-panel" aria-selected="true" class="active" data-example="0" tabindex="0">01 基础一阶极点</button><button role="tab" id="tab-2" aria-controls="example-panel" aria-selected="false" data-example="1" tabindex="-1">02 分母求导捷径</button><button role="tab" id="tab-3" aria-controls="example-panel" aria-selected="false" data-example="2" tabindex="-1">03 二阶极点</button></div>
+        <div id="example-panel" class="example-panel" role="tabpanel" aria-labelledby="tab-1"><div class="example-top"><div><span class="tiny-label">EXAMPLE <span id="example-number">01</span></span><h3 id="example-title">圈住原点，求留数</h3></div><div id="example-tag" class="example-tag">一阶极点</div></div><div class="question-box"><span>题目</span><strong id="example-question">f(z) = 1/[z(z−1)]，求 Res(f, 0)</strong></div><div id="example-steps" class="example-steps"></div><div class="example-actions"><button id="next-step" class="button button-dark" type="button">揭晓下一步 <span aria-hidden="true">→</span></button><span id="step-counter" aria-live="polite">已揭晓 0 / 3 步</span></div><div id="example-comment" class="example-comment"></div></div>
+      </div>
+      <div class="takeaway"><div><span class="takeaway-star">✳</span><span class="takeaway-kicker">带走一句话</span></div><strong>留数是 <span>−1 次幂的系数</span>；围道积分是 <span>圈内留数的总和 × 2πi</span>。</strong><a href="#top">再绕一圈 ↑</a></div>
+    </div></section>
+  </main>
+  <footer class="site-footer"><div class="section-wrap footer-inner"><div class="brand"><span class="brand-symbol">∮</span><span>留数<span class="brand-light">实验室</span></span></div><p>把复变函数，从“看不懂”变成“看得见”。</p><span>MADE FOR CURIOUS MINDS · 2026</span></div></footer>
+</body>
+</html>
